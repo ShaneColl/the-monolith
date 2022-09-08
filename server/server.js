@@ -1,6 +1,4 @@
 const { ApolloServer, gql, AuthenticationError } = require('apollo-server');
-//const members_list = require('./datasources/team_members');
-//const locations_list = require('./datasources/team_locations');
 
 member_list = [{
     "id": "1",
@@ -68,9 +66,8 @@ const resolvers = {
 
         //Member: (_,{name}, context) => members,
         Member: (_,{name}, context) => {return member_list},
-        Location: {
-            name: (_,{name}, context) => {dataSources.location_list[0].name}
-        }
+        Location: (_,{name}, context) => {return location_list}
+        
         //Location: (_,{name}, context) => {dataSources.location_list}
     }
     
@@ -86,12 +83,12 @@ const server = new ApolloServer({
     context: ({ req }) => {
    
       // Get the user token from the headers.
-      const token = req.headers.authorization || '';
+      //const token = req.headers.authorization || '';
         
-      if (!token) throw new AuthenticationError('You must be logged in');
+      //if (!token) throw new AuthenticationError('You must be logged in');
 
       // Add the user to the context
-      return { token };
+      //return { token };
 
       
     },
