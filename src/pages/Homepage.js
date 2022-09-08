@@ -37,16 +37,25 @@ function DisplayLocations() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-    /*return data.location.map(({ id, name}) => (
-        <div key={id}>
-          <h3>{name}</h3>
+    console.log(data.Location[0].name);
+
+    const temp_location = [];
+
+    data.Location.forEach(element => {
+        temp_location.push(
+            <div key={element.id}>
+                <h3>name: {element.name}</h3>
+
+                <hr />
+            </div>
+        );
+    });
+
+    return (
+        <div>
+          {temp_location}
         </div>
-      ));*/
-    
-    
-    return(
-        <p>{data.toString()}</p>
-    );
+      );
 }  
 
 function DisplayMembers() {
@@ -55,16 +64,24 @@ function DisplayMembers() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-    /* return data.member.map(({ id, name}) => (
-        <div key={id}>
-          <h3>{name}</h3>
-        </div>
-      ));*/
+    const temp_location = [];
 
-    
-      return(
-        <p>{data.toString()}</p>
-    );
+    data.Member.forEach(element => {
+        temp_location.push(
+            <div key={element.id}>
+                <h3>name: {element.name}</h3>
+
+                <hr />
+            </div>
+        );
+    });
+
+    return (
+        <div>
+          {temp_location}
+        </div>
+      );
+
 }  
 
 export default Homepage;
