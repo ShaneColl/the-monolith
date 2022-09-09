@@ -63,34 +63,39 @@ const typeDefs = gql`
 
 const resolvers = {
     Query: {
-
-        //Member: (_,{name}, context) => members,
-        Member: (_,{name}, context) => {return member_list},
-        Location: (_,{name}, context) => {return location_list}
-        
-        //Location: (_,{name}, context) => {dataSources.location_list}
+        Member: (_,{name}, context) => {
+            //Resolver level auth null check
+            if (!context) throw new AuthenticationError("auth error");
+            return context.dataSources.members},
+        Location: (_,{name}, context) => {
+            //Resolver level auth nullcheck
+            if (!context) throw new AuthenticationError("auth error");
+            return context.dataSources.locations}
     }
-    
 };
 
 
-//TODO understand how to get user
 const server = new ApolloServer({
     typeDefs, 
     resolvers,
     csrfPrevention: true,
     cache: 'bounded',
-    context: ({ req }) => {
-   
-      // Get the user token from the headers.
-      //const token = req.headers.authorization || '';
-        
-      //if (!token) throw new AuthenticationError('You must be logged in');
+    context: async ({ req }) => {
 
-      // Add the user to the context
-      //return { token };
+        //Extract token from header
+        const token = req.headers.authorization || '';
 
-      
+        //extract userID
+        const userId = token.split(' ')[1];
+
+        //Check if user ID is null
+        if (userId)! {
+            throw: AuthenticationError("account error"),
+        };
+
+        //return token
+        return { token };
+
     },
     dataSources: () => {
         return {
@@ -99,8 +104,6 @@ const server = new ApolloServer({
         };
       },
 });
-
-//let getMembers = function()
 
 server.listen({port: 9000})
     .then(({url}) => console.log(`Server running at ${url}`))
