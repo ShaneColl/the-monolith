@@ -63,14 +63,14 @@ const typeDefs = gql`
 
 const resolvers = {
     Query: {
-        Member: (_,{name}, context) => {
+        Member: (_,{name}, {dataSources, token}) => {
             //Resolver level auth null check
-            if (!context) throw new AuthenticationError("auth error");
-            return context.dataSources.members},
-        Location: (_,{name}, context) => {
+             if (!token) throw new AuthenticationError("auth error");
+            return dataSources.members},
+        Location: (_,{name}, {dataSources, token}) => {
             //Resolver level auth nullcheck
-            if (!context) throw new AuthenticationError("auth error");
-            return context.dataSources.locations}
+            if (!token) throw new AuthenticationError("auth error");
+            return dataSources.locations}
     }
 };
 
@@ -85,13 +85,8 @@ const server = new ApolloServer({
         //Extract token from header
         const token = req.headers.authorization || '';
 
-        //extract userID
-        const userId = token.split(' ')[1];
-
         //Check if user ID is null
-        if (userId)! {
-            throw: AuthenticationError("account error"),
-        };
+        if (!token) throw new AuthenticationError("account error");
 
         //return token
         return { token };
