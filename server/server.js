@@ -32,11 +32,11 @@ location_list = [{
 },
 {
     "id": "3",
-    "name": "Bay Area"
+    "name": "Phoenix"
 },
 {
     "id": "4",
-    "name": "Bay Area"
+    "name": "Vancouver"
 },
 {
     "id": "5",
@@ -46,7 +46,7 @@ location_list = [{
 const typeDefs = gql`
     
     type Query {
-        Member: [Member]
+        Members: [Member]
         Location(id: ID!): [Location]
     }
 
@@ -54,6 +54,7 @@ const typeDefs = gql`
     type Member {
         id: ID!
         name: String!
+        location(id: ID!): Location!
     }
 
     type Location {
@@ -65,13 +66,13 @@ const typeDefs = gql`
 
 const resolvers = {
     Query: {
-        Member: (_,{name}, {dataSources, token}) => {
+        Members: (_,{name}, {dataSources, token}) => {
             //Resolver level auth null check
-            if (!token) throw new AuthenticationError("auth error");
+            if (token == null) throw new AuthenticationError("auth error");
             return dataSources.members},
         Location: (parent, args, {dataSources, token}) => {
             //Resolver level auth nullcheck
-            if (!token) throw new AuthenticationError("auth error");
+            if (token == null) throw new AuthenticationError("auth error");
             return dataSources.locations}
             //return dataSources.locations.find(location => location.id === args.id)}
     }
@@ -89,7 +90,7 @@ const server = new ApolloServer({
         const token = req.headers.authorization || '';
 
         //Check if user ID is null
-        if (!token) throw new AuthenticationError("account error");
+        if (token == null) throw new AuthenticationError("account error");
 
         //return token
         return { token };
