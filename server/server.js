@@ -1,4 +1,6 @@
 const { ApolloServer, gql, AuthenticationError } = require('apollo-server');
+const { buildSubgraphSchema } = require("@apollo/subgraph");
+
 
 member_list = [{
     "id": "1",
@@ -31,11 +33,11 @@ location_list = [{
 },
 {
     "id": "3",
-    "name": "Bay Area"
+    "name": "Phoenix"
 },
 {
     "id": "4",
-    "name": "Bay Area"
+    "name": "Vancouver"
 },
 {
     "id": "5",
@@ -43,7 +45,9 @@ location_list = [{
 }];
 
 const typeDefs = gql`
-    
+    extend schema
+    @link(url: "https://specs.apollo.dev/federation/v2.0",
+    import: ["@key"])
     type Query {
         Member: [Member]
         Location: [Location]
@@ -65,19 +69,21 @@ const resolvers = {
     Query: {
         Member: (_,{name}, {dataSources, token}) => {
             //Resolver level auth null check
-             if (!token) throw new AuthenticationError("auth error");
+            if (token == null) throw new AuthenticationError("auth error");
             return dataSources.members},
         Location: (_,{name}, {dataSources, token}) => {
             //Resolver level auth nullcheck
-            if (!token) throw new AuthenticationError("auth error");
+            if (token == null) throw new AuthenticationError("auth error");
             return dataSources.locations}
     }
 };
 
 
 const server = new ApolloServer({
-    typeDefs, 
-    resolvers,
+    schema: buildSubgraphSchema({
+        typeDefs,
+        resolvers,
+    }),
     csrfPrevention: true,
     cache: 'bounded',
     context: async ({ req }) => {
@@ -86,7 +92,7 @@ const server = new ApolloServer({
         const token = req.headers.authorization || '';
 
         //Check if user ID is null
-        if (!token) throw new AuthenticationError("account error");
+        if (token == null) throw new AuthenticationError("account error");
 
         //return token
         return { token };
@@ -100,5 +106,5 @@ const server = new ApolloServer({
       },
 });
 
-server.listen({port: 9000})
+server.listen({port: 4001})
     .then(({url}) => console.log(`Server running at ${url}`))

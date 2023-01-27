@@ -1,7 +1,8 @@
 {
     "name": "the-monolith-server",
     "dependencies": {
-        "apollo-server": "^3.10.1",
+        "@apollo/subgraph": "^2.1.3",
+        "apollo-server": "^4.0.0",
         "graphql": "^16.6.0"
     }
 }

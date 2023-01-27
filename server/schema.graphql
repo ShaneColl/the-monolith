@@ -1,0 +1,17 @@
+    extend schema
+    @link(url: "https://specs.apollo.dev/federation/v2.0",
+    import: ["@key"])
+    type Query {
+        Member: [Member]
+        Location: [Location]
+    }
+
+    type Member {
+        id: ID!
+        name: String!
+    }
+
+    type Location {
+        id: ID!
+        name: String!
+    }
