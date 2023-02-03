@@ -1,4 +1,4 @@
-member_list = [{
+const member_list = [{
     "id": "1",
     "name": "Shane"
 },
@@ -18,3 +18,5 @@ member_list = [{
     "id": "5",
     "name": "Gaylen"
 }];
+
+module.exports = {member_list};

@@ -1,3 +1,6 @@
+const { AuthenticationError } = require('apollo-server');
+const { token } = require('./index.js')
+
 const resolvers = {
     Query: {
         Member: (_,{name}, {dataSources, token}) => {

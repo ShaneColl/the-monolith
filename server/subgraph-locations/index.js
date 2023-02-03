@@ -1,14 +1,22 @@
-const { ApolloServer, gql, AuthenticationError } = require('apollo-server');
+const { ApolloServer, gql } = require('@apollo/server');
 const { buildSubgraphSchema } = require("@apollo/subgraph");
+const { startStandaloneServer } = require('@apollo/server/standalone');
+const {location_list} = require('./datasources/members_data.js');
+
 
 const { readFileSync } = require('fs');
 
-const typeDefs = gql(readFileSync('./locations.graphql', { encoding: 'utf-8' }));
+const typeDefs = readFileSync('./locations.graphql', { encoding: 'utf-8' });
 const resolvers = require('./resolvers');
+const { parse } = require('graphql');
+
+console.log(typeDefs);
+
+
 
 async function startApolloServer() {
     const server = new ApolloServer({
-        schema: buildSubgraphSchema({ typeDefs, resolvers }),
+        schema: buildSubgraphSchema({ typeDefs: parse(typeDefs), resolvers }),
     });
 
     const port = 4001;
@@ -16,11 +24,16 @@ async function startApolloServer() {
 
     try {
     const { url } = await startStandaloneServer(server, {
-      context: async () => {
+      context: async ({req}) => {
+        //Extract token from header
+        const token = req.headers.authorization || '';
+        //Check if user ID is null
+        if (token == null) throw new AuthenticationError("account error");
         return {
           dataSources: {
             locations: location_list,
           },
+          token,
         };
       },
       listen: { port },

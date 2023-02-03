@@ -1,4 +1,4 @@
-location_list = [{
+const location_list = [{
     "id": "1",
     "name": "Tampa"
 },
@@ -18,3 +18,5 @@ location_list = [{
     "id": "5",
     "name": "Austin"
 }];
+
+module.exports = {location_list};

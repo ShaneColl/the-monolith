@@ -5,7 +5,8 @@ extend schema
         Location: [Location]
     }
 
-        type Location {
+    type Location {
         id: ID!
         name: String!
+        membersInLocation: [Member]!
     }
