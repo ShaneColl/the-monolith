@@ -6,7 +6,11 @@ extend schema
     }
 
     type Location {
-        id: ID!
+        locationId: ID!
         name: String!
-        membersInLocation: [Member]!
+        membersInLocation: [Member]
+    }
+
+    type Member @key(fields: "locationId") {
+        locationId: ID!
     }

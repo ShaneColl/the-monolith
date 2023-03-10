@@ -5,7 +5,8 @@ extend schema
         Member: [Member]
     }
 
-    type Member @key(fields: "id") {
+    type Member @key(fields: "locationId") {
         id: ID!
         name: String!
+        locationId: ID!
     }

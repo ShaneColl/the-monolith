@@ -1,7 +1,7 @@
 const { ApolloServer, gql } = require('@apollo/server');
 const { buildSubgraphSchema } = require("@apollo/subgraph");
 const { startStandaloneServer } = require('@apollo/server/standalone');
-const {location_list} = require('./datasources/members_data.js');
+const {location_list} = require('./datasources/locations_data.js');
 
 
 const { readFileSync } = require('fs');

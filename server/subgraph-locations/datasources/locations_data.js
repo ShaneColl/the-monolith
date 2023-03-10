@@ -1,22 +1,18 @@
 const location_list = [{
-    "id": "1",
+    "locationId": "loc-1",
     "name": "Tampa"
 },
 {
-    "id": "2",
+    "locationId": "loc-2",
     "name": "Austin"
 },
 {
-    "id": "3",
+    "locationId": "loc-3",
     "name": "Phoenix"
 },
 {
-    "id": "4",
+    "locationId": "loc-4",
     "name": "Vancouver"
-},
-{
-    "id": "5",
-    "name": "Austin"
 }];
 
 module.exports = {location_list};

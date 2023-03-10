@@ -1,22 +1,27 @@
 const member_list = [{
-    "id": "1",
-    "name": "Shane"
+    "id": "mem-1",
+    "name": "Shane",
+    "locationId": "loc-1"
 },
 {
-    "id": "2",
-    "name": "Kyle"
+    "id": "mem-2",
+    "name": "Kyle",
+    "locationId": "loc-2"
 },
 {
-    "id": "3",
-    "name": "Mitch"
+    "id": "mem-3",
+    "name": "Mitch",
+    "locationId": "loc-3" 
 },
 {
-    "id": "4",
-    "name": "Mario"
+    "id": "mem-4",
+    "name": "Mario",
+    "locationId": "loc-4"
 },
 {
-    "id": "5",
-    "name": "Gaylen"
+    "id": "mem-5",
+    "name": "Gaylen",
+    "locationId": "loc-2"
 }];
 
 module.exports = {member_list};
