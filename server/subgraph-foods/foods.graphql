@@ -1,0 +1,18 @@
+extend schema
+    @link(url: "https://specs.apollo.dev/federation/v2.0",
+    import: ["@key", "@external", "@requires"])
+    type Query {
+        foods: [Food]
+    }
+
+    type Food @key(fields: "foodId"){
+        foodId: ID!
+        foodName: String!
+        foodWeight: Int
+    }
+
+    type Member @key(fields: "foodId"){
+        foodId: ID!
+        foodWeight: Int
+    }
+

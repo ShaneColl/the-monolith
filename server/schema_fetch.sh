@@ -1,0 +1,1 @@
+rover graph fetch uaplaybook2@current > ./schema_output/schema.graphql

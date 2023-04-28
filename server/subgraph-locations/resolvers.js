@@ -8,6 +8,18 @@ const resolvers = {
             return dataSources.locations;
         },
     },
+    Member: {
+        __resolveReference: ({locationId}) => {
+            console.log("location resolver 2");
+            
+            return {id: locationId};
+        },
+        location: (parent, {name}, {dataSources, token}) => {
+            console.log("membersInLocation2")
+            const locations2 = dataSources.members.filter(l => l.locationId === parent.id);
+            return locations2;
+        },
+    },
 };
   
   module.exports = resolvers;

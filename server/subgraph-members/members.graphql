@@ -1,17 +1,26 @@
 extend schema
     @link(url: "https://specs.apollo.dev/federation/v2.0",
-    import: ["@key"])
+    import: ["@key", "@external", "@requires"])
     type Query {
         Members: [Member]
+        member(id: ID!): Member
     }
 
-    type Member {
+    type Member @key(fields: "locationId") @key(fields: "foodId"){
         id: ID!
         name: String!
         locationId: ID!
+        foodId: ID!
+        foodWeight: Int @external
+        realFoodWeight: Int @requires(fields: "foodWeight")
     }
 
     type Location @key(fields: "locationId") {
-        locationId: ID!
-        membersInLocation: [Member]
+         locationId: ID!
+         membersInLocation: [Member]
+    }
+
+    type Food @key(fields: "foodId") {
+         foodId: ID!
+         favoriteFood: Member
     }

@@ -1,0 +1,32 @@
+schema {
+  query: Query
+}
+
+type Food {
+  foodId: ID!
+  foodName: String!
+  foodWeight: Int
+  favoriteFood: Member
+}
+
+type Location {
+  locationId: ID!
+  name: String!
+  membersInLocation: [Member]
+}
+
+type Member {
+  foodId: ID!
+  foodWeight: Int
+  id: ID!
+  name: String!
+  locationId: ID!
+  realFoodWeight: Int
+}
+
+type Query {
+  foods: [Food]
+  Locations: [Location]
+  Members: [Member]
+  member(id: ID!): Member
+}

@@ -6,6 +6,6 @@ extend schema
     }
 
     type Location @key(fields: "locationId"){
-        locationId: ID!
+        locationId: ID! 
         name: String!
     }

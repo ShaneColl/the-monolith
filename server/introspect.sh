@@ -1,0 +1,1 @@
+rover graph introspect http://localhost:4002/ > ./introspect_output/members_introspected.graphql
