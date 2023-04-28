@@ -9,6 +9,16 @@ const resolvers = {
             return dataSources.foods;
         },
     },
+    Member: {
+        __resolveReference: ({foodId}) => {
+
+            return {id: foodId};
+        },
+        foodWeight: (parent, {name}, {dataSources, token}) => {
+            const weight = dataSources.foods.find(l => l.foodId === parent.id);
+            return weight.foodWeight;
+        },
+    },
   
 };
 
